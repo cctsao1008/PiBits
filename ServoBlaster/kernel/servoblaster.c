@@ -74,21 +74,21 @@
 #define PWMCLK_CNTL		40
 #define PWMCLK_DIV		41
 
-#define PWMCTL_MODE1	(1<<1)
-#define PWMCTL_PWEN1	(1<<0)
+#define PWMCTL_MODE1		(1<<1)
+#define PWMCTL_PWEN1		(1<<0)
 #define PWMCTL_CLRF		(1<<6)
-#define PWMCTL_USEF1	(1<<5)
+#define PWMCTL_USEF1		(1<<5)
 
-#define PWMDMAC_ENAB	(1<<31)
+#define PWMDMAC_ENAB		(1<<31)
 // I think this means it requests as soon as there is one free slot in the FIFO
 // which is what we want as burst DMA would mess up our timing..
 #define PWMDMAC_THRSHLD	((15<<8)|(15<<0))
 
-#define DMA_CS			(BCM2708_DMA_CS/4)
+#define DMA_CS		(BCM2708_DMA_CS/4)
 #define DMA_CONBLK_AD	(BCM2708_DMA_ADDR/4)
-#define DMA_DEBUG		(BCM2708_DMA_DEBUG/4)
+#define DMA_DEBUG	(BCM2708_DMA_DEBUG/4)
 
-#define BCM2708_DMA_END				(1<<1)	// Why is this not in mach/dma.h ?
+#define BCM2708_DMA_END			(1<<1)	// Why is this not in mach/dma.h ?
 #define BCM2708_DMA_NO_WIDE_BURSTS	(1<<26)
 
 static int dev_open(struct inode *, struct file *);
@@ -97,7 +97,7 @@ static ssize_t dev_read(struct file *, char *, size_t, loff_t *);
 static ssize_t dev_write(struct file *, const char *, size_t, loff_t *);
 static long dev_ioctl(struct file *, unsigned int, unsigned long);
 
-static struct file_operations fops = 
+static struct file_operations fops =
 {
 	.open = dev_open,
 	.read = dev_read,
@@ -122,6 +122,11 @@ static uint8_t servo2gpio[] = {
 #else
 		18,	// P1-12
 #endif
+
+// cctsao++
+#define REV_2
+// cctsao--
+
 #if defined(REV_1)
 		21,	// P1-13
 #elif defined(REV_2)
@@ -221,7 +226,7 @@ static int wait_for_servo(int servo)
 int init_module(void)
 {
 	int res, i, s;
-	
+
 	res = alloc_chrdev_region(&devno, 0, 1, "servoblaster");
 	if (res < 0) {
 		printk(KERN_WARNING "ServoBlaster: Can't allocated device number\n");
