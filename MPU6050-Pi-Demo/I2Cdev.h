@@ -49,6 +49,16 @@ THE SOFTWARE.
 #define FALSE	(0==1)
 #endif
 
+#define RASPI_REV2
+
+#if defined(RASPI_REV1)
+#define RASPI_I2C_DEV "/dev/i2c-0"
+#elif defined(RASPI_REV2)
+#define RASPI_I2C_DEV "/dev/i2c-1"
+#else
+#error Please define what version of Pi that you are going to use.
+#endif
+    
 class I2Cdev {
     public:
         I2Cdev();
